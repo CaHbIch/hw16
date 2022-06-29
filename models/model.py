@@ -2,7 +2,7 @@ from app import db
 
 
 class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(30), nullable=True)
     last_name = db.Column(db.String(50), nullable=True)
     age = db.Column(db.Integer, nullable=True)
@@ -15,7 +15,7 @@ class Users(db.Model):
 
 
 class Order(db.Model):
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=True)
     description = db.Column(db.String, nullable=True)
     start_date = db.Column(db.String(12), nullable=True)
@@ -27,6 +27,6 @@ class Order(db.Model):
 
 
 class Offer(db.Model):
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     executor_id = db.Column(db.Integer, db.ForeignKey('users.id'))

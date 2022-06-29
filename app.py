@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
+
 db.create_all()
 
 if __name__ == '__main__':
