@@ -1,4 +1,4 @@
-from app import db
+from setup_db import db
 
 
 class Users(db.Model):
@@ -10,6 +10,15 @@ class Users(db.Model):
     role = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(15), unique=True)
 
+    def __int__(self, id, first_name, last_name, age, email, role, phone):
+        self.id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+        self.email = email
+        self.role = role
+        self.phone = phone
+
     def __repr__(self):
         return f"<id{self.id}>"
 
@@ -18,8 +27,8 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=True)
     description = db.Column(db.String, nullable=True)
-    start_date = db.Column(db.String(12), nullable=True)
-    end_date = db.Column(db.String(12), nullable=True)
+    start_date = db.Column(db.Date, nullable=True)
+    end_date = db.Column(db.Date, nullable=True)
     address = db.Column(db.String(100), nullable=True)
     price = db.Column(db.Float)
     customer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
