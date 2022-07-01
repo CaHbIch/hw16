@@ -2,6 +2,7 @@ from setup_db import db
 
 
 class Users(db.Model):
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(30), nullable=True)
     last_name = db.Column(db.String(50), nullable=True)
@@ -10,14 +11,13 @@ class Users(db.Model):
     role = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(15), unique=True)
 
-    def __int__(self, id, first_name, last_name, age, email, role, phone):
-        self.id = id
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
-        self.email = email
-        self.role = role
-        self.phone = phone
+    # def __int__(self, first_name, last_name, age, email, role, phone):
+    #     self.first_name = first_name
+    #     self.last_name = last_name
+    #     self.age = age
+    #     self.email = email
+    #     self.role = role
+    #     self.phone = phone
 
     def __repr__(self):
         return f"<id{self.id}>"

@@ -8,10 +8,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DATABASE}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-
 # Связываем базу данных и приложение
 db.init_app(app)
-
 
 # Используйте для отправки контекста приложения при создании таблиц.
 with app.app_context():
