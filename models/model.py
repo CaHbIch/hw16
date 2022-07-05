@@ -13,7 +13,6 @@ class User(db.Model):
     role = db.Column(db.String(100), nullable=True)
     phone = db.Column(db.String(15), unique=True)
 
-    order = db.relationship("Order")
 
     # def __int__(self, first_name, last_name, age, email, role, phone):
     #     self.first_name = first_name
@@ -42,7 +41,6 @@ class Order(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     executor_id = db.Column(db.Integer, db.ForeignKey('offer.id'))
 
-    users = db.relationship("User")
 
 class Offer(db.Model):
     __tablename__ = 'offer'
