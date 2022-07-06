@@ -27,7 +27,7 @@ class Order(db.Model):
     price = db.Column(db.Float)
 
     customer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    executor_id = db.Column(db.Integer, db.ForeignKey('offer.id'))
+    executor_id = db.Column(db.Integer, db.ForeignKey('order.id'))
 
 
 class Offer(db.Model):
@@ -37,3 +37,4 @@ class Offer(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     executor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+

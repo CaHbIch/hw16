@@ -2,7 +2,6 @@ from model import *
 from models.config import DATAUSERS, DATAORDERS, DATAOFFER
 from app import app, db
 
-
 # #Создаем модельки
 users = [User(**user_data) for user_data in DATAUSERS]
 order = [Order(**order_data) for order_data in DATAORDERS]
@@ -15,3 +14,5 @@ db.session.add_all(offer)
 
 # Пишем в базу изменения
 db.session.commit()
+
+print('Данные успешно загружены')

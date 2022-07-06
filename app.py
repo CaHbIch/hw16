@@ -1,4 +1,6 @@
-from flask import Flask
+import json
+
+from flask import Flask, request
 
 from classes.data_service import Service
 from config import DATABASE
@@ -20,20 +22,55 @@ db.init_app(app)
 app.app_context().push()
 
 
-@app.route("/users/", methods=["GET"])
+@app.route("/users/", methods=['GET', 'POST'])
 def get_users():
-    all_users = service.get_all_users()
-    return all_users
+    if request.method == "GET":
+        all_users = service.get_users()
+        return all_users
+    elif request.method == "POST":
+        new_user = User(
+            id=request,
+            first_name=request,
+            last_name=request,
+            age=request,
+            email=request,
+            role=request,
+            phone=request,
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        return f'Пользователь добавлен {new_user}'
 
+@app.route("/users/<int:pk>")
+def get_user(pk):
+    if request.method == "GET":
+        user = service.get_one_user(pk)
+        return user
 
-# @app.route("/")
-# def get_users():
-#     users = db.session.query(User.id, User.first_name, User.last_name).all()
-#     for user in users:
-#         return dict(user)
+@app.route("/orders/")
+def get_orders():
+    if request.method == "GET":
+        all_orders = service.get_orders()
+        return all_orders
 
+@app.route("/orders/<int:pk>")
+def get_order(pk):
+    if request.method == "GET":
+        one_order = service.get_one_order(pk)
+        return one_order
 
+@app.route("/offer/")
+def get_offers():
+    if request.method == "GET":
+        all_orders = service.get_offers()
+        return all_orders
+
+@app.route("/offer/<int:pk>")
+def get_offer(pk):
+    if request.method == "GET":
+        one_offer = service.get_one_offer(pk)
+        return one_offer
 
 if __name__ == '__main__':
     db.create_all()
-    app.run(debug=False)
+    app.run(debug=True)
