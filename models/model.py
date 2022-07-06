@@ -14,18 +14,6 @@ class User(db.Model):
     phone = db.Column(db.String(15), unique=True)
 
 
-    # def __int__(self, first_name, last_name, age, email, role, phone):
-    #     self.first_name = first_name
-    #     self.last_name = last_name
-    #     self.age = age
-    #     self.email = email
-    #     self.role = role
-    #     self.phone = phone
-
-    def __repr__(self):
-        return f"<id{self.id}>"
-
-
 class Order(db.Model):
     __tablename__ = 'order'
     __table_args__ = {'extend_existing': True}
@@ -33,8 +21,8 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=True)
     description = db.Column(db.String, nullable=True)
-    start_date = db.Column(db.Date, nullable=True)
-    end_date = db.Column(db.Date, nullable=True)
+    start_date = db.Column(db.String, nullable=True)
+    end_date = db.Column(db.String, nullable=True)
     address = db.Column(db.String(100), nullable=True)
     price = db.Column(db.Float)
 
