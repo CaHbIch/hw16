@@ -28,49 +28,103 @@ def get_users():
         all_users = service.get_users()
         return all_users
     elif request.method == "POST":
-        user = json.loads(request.data)
-        new_user = User(
-            id=user["id"],
-            first_name=user["first_name"],
-            last_name=user["last_name"],
-            age=user["age"],
-            email=user["email"],
-            role=user["role"],
-            phone=user["phone"],
-        )
+        new_user = User(**json.loads(request.data))
         db.session.add(new_user)
         db.session.commit()
-        return f'Пользователь добавлен {new_user}'
+        return f'Пользователь {new_user.first_name} добавлен'
 
-@app.route("/users/<int:pk>")
+
+@app.route("/users/<int:pk>", methods=['GET', 'PUT', 'DELETE'])
 def get_user(pk):
     if request.method == "GET":
         user = service.get_one_user(pk)
         return user
+    elif request.method == "PUT":
+        new_user = User(**json.loads(request.data))
+        new_data = User.query.get(pk)
+        new_data.first_name = new_user.first_name
+        new_data.last_name = new_user.last_name
+        new_data.age = new_user.age
+        new_data.email = new_user.email
+        new_data.role = new_user.role
+        new_data.phone = new_user.phone
+        db.session.add(new_data)
+        db.session.commit()
+        return f"Пользователь  обновлен"
+    elif request.method == "DELETE":
+        user_data = User.query.get(pk)
+        db.session.delete(user_data)
+        db.session.commit()
+        return "Пользователь удален"
 
-@app.route("/orders/")
+
+@app.route("/orders/", methods=['GET', 'POST'])
 def get_orders():
     if request.method == "GET":
         all_orders = service.get_orders()
         return all_orders
+    elif request.method == "POST":
+        new_order = Order(**json.loads(request.data))
+        db.session.add(new_order)
+        db.session.commit()
+        return f'Заказ {new_order.name} добавлен'
 
-@app.route("/orders/<int:pk>")
+
+@app.route("/orders/<int:pk>", methods=['GET', 'PUT', 'DELETE'])
 def get_order(pk):
     if request.method == "GET":
         one_order = service.get_one_order(pk)
         return one_order
+    elif request.method == "PUT":
+        new_order = Order(**json.loads(request.data))
+        user_order = Order.query.get(pk)
+        user_order.name = new_order.name
+        user_order.description = new_order.description
+        user_order.start_date = new_order.start_date
+        user_order.end_date = new_order.end_date
+        user_order.address = new_order.address
+        user_order.price = new_order.price
+        db.session.add(user_order)
+        db.session.commit()
+        return "Заказ обновлен"
+    elif request.method == "DELETE":
+        user_order = Order.query.get(pk)
+        db.session.delete(user_order)
+        db.session.commit()
+        return "заказ удален"
 
-@app.route("/offer/")
+
+@app.route("/offer/", methods=['GET', 'POST'])
 def get_offers():
     if request.method == "GET":
         all_orders = service.get_offers()
         return all_orders
+    elif request.method == "POST":
+        new_offer = Offer(**json.loads(request.data))
+        db.session.add(new_offer)
+        db.session.commit()
+        return f'номер предложения {new_offer.id} добавлен'
 
-@app.route("/offer/<int:pk>")
+
+@app.route("/offer/<int:pk>", methods=['GET', 'PUT', 'DELETE'])
 def get_offer(pk):
     if request.method == "GET":
         one_offer = service.get_one_offer(pk)
         return one_offer
+    elif request.method == "PUT":
+        new_offer = Offer(**json.loads(request.data))
+        user_offer = Offer.query.get(pk)
+        new_offer.order_id = user_offer.order_id
+        new_offer.executor_id = user_offer.executor_id
+        db.session.add(user_offer)
+        db.session.commit()
+        return "номер предложения обновлен"
+    elif request.method == "DELETE":
+        user_offer = Offer.query.get(pk)
+        db.session.delete(user_offer)
+        db.session.commit()
+        return "Номер предложения удален"
+
 
 if __name__ == '__main__':
     db.create_all()

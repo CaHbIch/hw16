@@ -14,7 +14,6 @@ class User(db.Model):
     phone = db.Column(db.String(15), unique=True)
 
 
-
 class Order(db.Model):
     __tablename__ = 'order'
     __table_args__ = {'extend_existing': True}
