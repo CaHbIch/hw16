@@ -28,14 +28,15 @@ def get_users():
         all_users = service.get_users()
         return all_users
     elif request.method == "POST":
+        user = json.loads(request.data)
         new_user = User(
-            id=request,
-            first_name=request,
-            last_name=request,
-            age=request,
-            email=request,
-            role=request,
-            phone=request,
+            id=user["id"],
+            first_name=user["first_name"],
+            last_name=user["last_name"],
+            age=user["age"],
+            email=user["email"],
+            role=user["role"],
+            phone=user["phone"],
         )
         db.session.add(new_user)
         db.session.commit()
