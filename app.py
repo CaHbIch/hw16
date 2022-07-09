@@ -40,15 +40,9 @@ def get_user(pk):
         user = service.get_one_user(pk)
         return user
     elif request.method == "PUT":
-        new_user = User(**json.loads(request.data))
-        new_data = User.query.get(pk)
-        new_data.first_name = new_user.first_name
-        new_data.last_name = new_user.last_name
-        new_data.age = new_user.age
-        new_data.email = new_user.email
-        new_data.role = new_user.role
-        new_data.phone = new_user.phone
-        db.session.add(new_data)
+        user_data = json.loads(request.data)
+        new_user = db.session.query(User).filter(User.id == pk)
+        new_user.update(user_data)
         db.session.commit()
         return f"Пользователь  обновлен"
     elif request.method == "DELETE":
@@ -76,15 +70,9 @@ def get_order(pk):
         one_order = service.get_one_order(pk)
         return one_order
     elif request.method == "PUT":
-        new_order = Order(**json.loads(request.data))
-        user_order = Order.query.get(pk)
-        user_order.name = new_order.name
-        user_order.description = new_order.description
-        user_order.start_date = new_order.start_date
-        user_order.end_date = new_order.end_date
-        user_order.address = new_order.address
-        user_order.price = new_order.price
-        db.session.add(user_order)
+        user_order = json.loads(request.data)
+        new_order = db.session.query(Order).filter(Order.id == pk)
+        new_order.update(user_order)
         db.session.commit()
         return "Заказ обновлен"
     elif request.method == "DELETE":
@@ -112,11 +100,9 @@ def get_offer(pk):
         one_offer = service.get_one_offer(pk)
         return one_offer
     elif request.method == "PUT":
-        new_offer = Offer(**json.loads(request.data))
-        user_offer = Offer.query.get(pk)
-        new_offer.order_id = user_offer.order_id
-        new_offer.executor_id = user_offer.executor_id
-        db.session.add(user_offer)
+        user_offer = json.loads(request.data)
+        new_offer = db.session.query(Offer).filter(Offer.id == pk)
+        new_offer.update(user_offer)
         db.session.commit()
         return "номер предложения обновлен"
     elif request.method == "DELETE":
